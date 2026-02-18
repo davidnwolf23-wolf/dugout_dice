@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚾ Dugout Dice
 
-## Getting Started
+Welcome to **Dugout Dice**, a fast-paced, high-stakes baseball casino game built for the web!
 
-First, run the development server:
+## 🎮 About the Game
+Dugout Dice combines the strategy of baseball with the thrill of casino-style betting.
+- **Pitch Phase**: Set the target score while your defense tries to hold the line.
+- **Hit Phase**: Step up to the plate and try to beat the house score.
+- **Side Bets**: Bet on massive plays like **Grand Slams**, **Triple Plays**, or a **Perfect Inning**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Getting Started
+To run this project locally:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+4.  Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Built With
+- **Next.js 15** (App Router)
+- **Tailwind CSS** (Casino-felt styling)
+- **Framer Motion** (Smooth chip and dice animations)
+- **Zustand** (Game state management)
+- **Lucide React** (Branded icons)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Created with ❤️ for friends and family.*
