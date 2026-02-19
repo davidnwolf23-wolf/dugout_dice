@@ -147,7 +147,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
             currentStats.logs.unshift(`Rolled ${dice.join(',')} (Total ${total}) -> BONUS CHANCE!`);
             set({
                 lastRoll: { dice, total },
-                lastAction: "BONUS ROLL CHANCE",
+                lastAction: "Roll Bonus",
                 awaitingBonus: true,
                 // Do NOT update outs/runs yet - wait for bonus roll outcome
                 pitchingStats: gamePhase === 'PITCHING' ? currentStats : state.pitchingStats,
@@ -226,7 +226,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
                     newOuts += 1; // Out was pending from Strikeout trigger
                     bonusSuccess = true;
                 } else if (bonusDie === 6) {
-                    action = "Double Play!";
+                    action = "Double Play";
                     newOuts += 2; // Strikeout (1) + DP (1) = 2 outs total added? 
                     currentStats.dp += 1;
                     if (newOnBase[2]) newOnBase[2] = false;
