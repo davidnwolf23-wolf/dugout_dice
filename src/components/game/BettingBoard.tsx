@@ -81,6 +81,7 @@ export const BettingBoard = () => {
     const isSpotActive = (spot: typeof ALL_SPOTS[0]): boolean => {
         if (isPayout) return false;
         if (outs >= 3) return false;
+        if (awaitingContinue) return false;
 
         if (spot.type === 'pregame') return isSetup;
 

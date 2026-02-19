@@ -63,19 +63,25 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
     updateGoogleScriptUrl: (url) => set({ googleScriptUrl: url }),
 
-    updateBet: (betType, amount) => set(state => ({
-        players: [{
-            ...state.players[0],
-            bets: { ...state.players[0].bets, [betType]: amount }
-        }]
-    })),
+    updateBet: (betType, amount) => set(state => {
+        if (state.awaitingContinue) return {};
+        return {
+            players: [{
+                ...state.players[0],
+                bets: { ...state.players[0].bets, [betType]: amount }
+            }]
+        };
+    }),
 
-    updateSingleBet: (betType, amount) => set(state => ({
-        players: [{
-            ...state.players[0],
-            singleBets: { ...state.players[0].singleBets, [betType]: amount }
-        }]
-    })),
+    updateSingleBet: (betType, amount) => set(state => {
+        if (state.awaitingContinue) return {};
+        return {
+            players: [{
+                ...state.players[0],
+                singleBets: { ...state.players[0].singleBets, [betType]: amount }
+            }]
+        };
+    }),
 
     startGame: () => set(state => {
         const player = state.players[0];

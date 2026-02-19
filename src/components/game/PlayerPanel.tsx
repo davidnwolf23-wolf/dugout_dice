@@ -8,22 +8,23 @@ import { BaseballIcon, GloveIcon, CrossedBatsIcon, UmpireIcon, HomePlateIcon } f
 export const PlayerPanel = () => {
     const players = useGameStore(state => state.players);
     const gamePhase = useGameStore(state => state.gamePhase);
+    const awaitingContinue = useGameStore(state => state.awaitingContinue);
 
     return (
         <div className="space-y-4">
             {players.map(player => (
-                <PlayerCard key={player.id} player={player} gamePhase={gamePhase} />
+                <PlayerCard key={player.id} player={player} gamePhase={gamePhase} awaitingContinue={awaitingContinue} />
             ))}
         </div>
     );
 };
 
-const PlayerCard = ({ player, gamePhase }: { player: Player, gamePhase: string }) => {
+const PlayerCard = ({ player, gamePhase, awaitingContinue }: { player: Player, gamePhase: string, awaitingContinue: boolean }) => {
     const updateSingleBet = useGameStore(state => state.updateSingleBet);
     const [selectedChip, setSelectedChip] = useState(10);
 
-    const isLivePitching = gamePhase === 'PITCHING';
-    const isLiveHitting = gamePhase === 'HITTING';
+    const isLivePitching = gamePhase === 'PITCHING' && !awaitingContinue;
+    const isLiveHitting = gamePhase === 'HITTING' && !awaitingContinue;
 
     const handleBet = (betType: keyof Player['singleBets'], amount: number) => {
         const currentBet = player.singleBets[betType];

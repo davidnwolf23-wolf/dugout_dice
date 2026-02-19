@@ -115,7 +115,7 @@ export default function Home() {
                     <div className="text-center">
                         <div className="text-[8px] uppercase text-green-300/30 font-bold tracking-wider">Target</div>
                         <div className={`text-lg sm:text-xl font-mono font-bold ${isPitching ? 'text-emerald-400' : 'text-white/40'}`}>
-                            {isPitching ? (runs > 0 ? runs : '—') : pitchingScore}
+                            {isPitching ? runs : pitchingScore}
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@ export default function Home() {
                     <div className="text-center">
                         <div className="text-[8px] uppercase text-green-300/30 font-bold tracking-wider">Points</div>
                         <div className="text-2xl sm:text-3xl font-mono font-bold text-emerald-400">
-                            {isHitting || isPayout ? runs : '—'}
+                            {isHitting || isPayout ? runs : 0}
                         </div>
                     </div>
 
@@ -322,29 +322,35 @@ export default function Home() {
                     )}
 
                     {/* Payout Result + Controls */}
-                    {isPayout && (
-                        <div className="flex flex-col items-center gap-3">
-                            <div className={`px-8 py-3 rounded-xl border backdrop-blur-sm text-center ${player.winnings.inningWin > 0
-                                ? 'bg-emerald-900/40 border-emerald-500/30'
-                                : player.winnings.inningWin < 0
-                                    ? 'bg-red-900/40 border-red-500/30'
-                                    : 'bg-yellow-900/40 border-yellow-500/30'
-                                }`}>
-                                <div className={`text-3xl font-black uppercase tracking-wider ${player.winnings.inningWin > 0
-                                    ? 'text-emerald-400'
-                                    : player.winnings.inningWin < 0
-                                        ? 'text-red-400'
-                                        : 'text-yellow-400'
+                    {isPayout && (() => {
+                        const isWin = runs > pitchingScore;
+                        const isLoss = runs < pitchingScore;
+                        const isPush = runs === pitchingScore;
+
+                        return (
+                            <div className="flex flex-col items-center gap-3">
+                                <div className={`px-8 py-3 rounded-xl border backdrop-blur-sm text-center ${isWin
+                                    ? 'bg-emerald-900/40 border-emerald-500/30'
+                                    : isLoss
+                                        ? 'bg-red-900/40 border-red-500/30'
+                                        : 'bg-yellow-900/40 border-yellow-500/30'
                                     }`}>
-                                    {player.winnings.inningWin > 0 ? '🎉 WIN' : player.winnings.inningWin < 0 ? 'LOSS' : 'PUSH'}
+                                    <div className={`text-3xl font-black uppercase tracking-wider ${isWin
+                                        ? 'text-emerald-400'
+                                        : isLoss
+                                            ? 'text-red-400'
+                                            : 'text-yellow-400'
+                                        }`}>
+                                        {isWin ? '🎉 WIN' : isLoss ? 'LOSS' : 'PUSH'}
+                                    </div>
+                                    <div className="text-sm text-white/50 mt-1">
+                                        {runs} - {pitchingScore}
+                                    </div>
                                 </div>
-                                <div className="text-sm text-white/50 mt-1">
-                                    {runs} - {pitchingScore}
-                                </div>
+                                <PayoutChipDisplay winnings={player.winnings} />
                             </div>
-                            <PayoutChipDisplay winnings={player.winnings} />
-                        </div>
-                    )}
+                        );
+                    })()}
 
                     {/* Setup welcome text */}
                     {isSetup && (
@@ -387,16 +393,20 @@ const RulesModal = ({ onClose }: { onClose: () => void }) => (
                 <h3><b>Bonus Rolls — Pitching:</b></h3>
                 <h3>Players can earn bonus rolls to earn a triple play or double play. These plays are triggered by a roll of three dice given certain game state conditions:</h3>
                 <ul className="list-disc pl-5">
-                    <li><b>Double Play:</b> With at least one runner on base and fewer than 2 outs, roll a third die, and a (6,4,3) turns a double play, and the lead runner is removed.</li>
-                    <li><b>Triple Play:</b> With two runners on and 0 outs, roll a third die, and a (3,3,3) turns a triple play!</li>
+                    <li><b>Double Play:</b> With at least one runner on base and fewer than 2 outs, roll a third die, and a (6,4,3) turns a double play. Two outs are recorded and the lead runner is removed.</li>
+                    <li><b>Triple Play:</b> With two runners on and 0 outs, roll a third die, and a (3,3,3) turns a triple play! Three outs are recorded and all runners are removed.</li>
                 </ul>
 
                 <h3><b>Bonus Rolls — Hitting:</b></h3>
-                <h3>When hitting, runners roll a bonus die whenever there are fewer than 2 outs and at least one runner on base</h3>
+                <h3>When hitting, runners roll a bonus die whenever there are fewer than 2 outs and at least one runner on base:</h3>
                 <ul className="list-disc pl-5">
-                    <li><b>Sacrifice:</b> A bonus roll of 1 advances each existing runner one base</li>
-                    <li><b>Double Play:</b> A bonus roll of 6 in the same situation results in a double play, and the lead runner is also removed.</li>
+                    <li><b>Sacrifice:</b> A bonus roll of 1 results in one out advances each existing runner one base</li>
+                    <li><b>Double Play:</b> A bonus roll of 6 in the same situation results in two outs and the lead runner is removed.</li>
                 </ul>
+
+                <p>
+                    <b>Note:</b> If a bonus roll is earned but the event condition is not met, the hit type is determined by the first two dice only.
+                </p>
 
                 <h3><b>Inning Long Bets:</b></h3>
                 <h3>These bets are placed before the inning begins, and are settled at the end of the inning.</h3>
