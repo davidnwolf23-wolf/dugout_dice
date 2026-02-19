@@ -147,7 +147,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
             currentStats.logs.unshift(`Rolled ${dice.join(',')} (Total ${total}) -> BONUS CHANCE!`);
             set({
                 lastRoll: { dice, total },
-                lastAction: "Roll Bonus",
+                lastAction: "Bonus",
                 awaitingBonus: true,
                 // Do NOT update outs/runs yet - wait for bonus roll outcome
                 pitchingStats: gamePhase === 'PITCHING' ? currentStats : state.pitchingStats,
