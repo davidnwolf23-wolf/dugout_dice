@@ -80,9 +80,10 @@ export default function Home() {
 
                     <button
                         onClick={() => setShowRules(!showRules)}
-                        className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/60 hover:text-white"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-all border border-white/10 text-white/70 hover:text-white group"
                     >
-                        <BookOpen size={20} />
+                        <BookOpen size={16} className="text-emerald-400 group-hover:scale-110 transition-transform" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Rules</span>
                     </button>
                 </header>
 
